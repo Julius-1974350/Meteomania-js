@@ -1,23 +1,29 @@
+import dayjs from "dayjs";
 import mongoose from "mongoose";
 const planetSchema = mongoose.Schema({
     location: {
-        station: {type: String, required:true},
+        station: {type: String, required:true, index:true, uppercase:true},
         coord: {
             lon: {type:Number, required:true},
             lat: {type:Number, required:true},
         },
         
     },
-    name : {type: String, required:true, unique: true},
-    discoveredBy : {type: String, index:true},
-    discoveryDate: Date,
-    temperature : Number,
-    satellites:[String],
-    position: {
-        x: {type:Number, required:true, min:-1000, max:1000},
-        y: {type:Number, required:true, min:-1000, max:1000},
-        z: {type:Number, required:true, min:-1000, max:1000},
-    }
+    temperature: {type:Number, required:true},
+    pressure: {type:Number, required:true},
+    humidity: {type:Number, required:true},
+    feelslike: {type:Number, required:true},
+    uvIndex: {type:Number, required:true, min: 0, max:11},
+    wind: {
+        speed: {type:Number, required:true,},
+        degree: {type:Number, required:true, min: 0, max: 359},
+        direction: String,
+    },
+    clouds: {
+        cloudcover: {type:Number, required:true, min:0, max:1},
+    },
+    observationDate: {type:Date, default:dayjs()},
+    hexMatrix: [String, String, String, String]
 },
 {
     collection:'planets',

@@ -34,11 +34,43 @@ class planetsRepository {
                     break;
             }
         }
-        observation.discoveryDate = dayjs(observation.discoveryDate).format('YYYY-MM-DD');
+        transformWind(observation);
         delete observation.createdAt;
         delete observation.updatedAt;
         delete observation.__v;
+        
         return observation;
+    }
+    transformWind(observation)
+    {
+        switch (observation.wind) {
+            case (wind >= 337.5 || wind < 22.5):
+                observation.direction = "N";
+                break;
+            case (wind >= 22.5 || wind < 67.5):
+                observation.direction = "NE";
+                break;
+            case (wind >= 67.5 || wind < 112.5):
+                observation.direction = "E";
+                break;
+            case (wind >= 112.5 || wind < 157.5):
+                observation.direction = "SE";
+                break;
+            case (wind >= 157.5 || wind < 202.5):
+                observation.direction = "S";
+                break;
+            case (wind >= 202.5 || wind < 247.5):
+                observation.direction = "SW";
+                break;
+            case (wind >= 247.5 || wind < 292.5):
+                observation.direction = "W";
+                break;
+            case (wind >= 292.5 || wind < 337.5):
+                observation.direction = "NW";
+                break;
+            default:
+                break;
+        }
     }
     //TODO: TP - HexMatrix
     //this.calculateHexMatrix()
